@@ -1,0 +1,11 @@
+{
+  "name": "stojg/sandbox.dev",
+  "description": "This is stigs SilverStripe sandbox",
+  "require": {
+    "php": ">=5.3.2"
+  },
+  "config": {
+    "process-timeout": 600
+  },
+  "minimum-stability": "dev"
+}
