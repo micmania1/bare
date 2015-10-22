@@ -7,6 +7,8 @@ class Page extends SiteTree {
 	private static $has_one = array(
 	);
 
+	breakdeploypls
+
 }
 class Page_Controller extends ContentController {
 
