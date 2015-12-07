@@ -8,3 +8,9 @@ silverstripe-cache
 .idea
 .DS_Store
 vendor/
+/silverstripe-*
+/framework
+/cms
+/crontask
+/siteconfig
+/reports
