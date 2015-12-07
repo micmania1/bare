@@ -400,6 +400,11 @@ class DataListTest extends SapphireTest {
 		// byID() returns a DataObject, rather than a DataList
 		$this->assertInstanceOf('DataObjectTest_Team', $team);
 		$this->assertEquals('Team 2', $team->Title);
+
+		// Assert that filtering on ID searches by the base table, not the child table field
+		$query = DataObjectTest_SubTeam::get()->filter('ID', 4)->sql($parameters);
+		$this->assertContains('WHERE ("DataObjectTest_Team"."ID" = ?)', $query);
+		$this->assertNotContains('WHERE ("DataObjectTest_SubTeam"."ID" = ?)', $query);
 	}
 
 	/**
@@ -890,6 +895,26 @@ class DataListTest extends SapphireTest {
 		$sql = $list->sql($parameters);
 		$this->assertSQLContains('WHERE (("DataObjectTest_TeamComment"."Name" >= ?))', $sql);
 		$this->assertEquals(array('Bob'), $parameters);
+	}
+
+	/**
+	 * Test exact match filter with empty array items
+	 */
+	public function testEmptyFilter() {
+		$list = DataObjectTest_TeamComment::get();
+		$list = $list->exclude('Name', array());
+
+		$sql = $list->sql($parameters);
+		$this->assertSQLContains('WHERE (("DataObjectTest_TeamComment"."Name" NOT IN (?)))', $sql);
+		$this->assertEquals(array(''), $parameters);
+
+
+		$list = DataObjectTest_TeamComment::get();
+		$list = $list->filter('Name', array());
+
+		$sql = $list->sql($parameters);
+		$this->assertSQLContains('WHERE ("DataObjectTest_TeamComment"."Name" IN (?))', $sql);
+		$this->assertEquals(array(''), $parameters);
 	}
 
 	/**
