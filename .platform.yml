@@ -1,1 +1,1 @@
-infrastructure: 1.4.3
+base: debian-jessie
