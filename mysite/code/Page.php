@@ -7,6 +7,14 @@ class Page extends SiteTree {
 	private static $has_one = array(
 	);
 
+	public function requireDefaultRecords() {
+		parent::requireDefaultRecords();
+
+		// Trigger a strict/notice error.
+		trigger_error('notice error', E_USER_NOTICE);
+		$variableThatIsntDefined .= 'ertret';
+	}
+
 }
 class Page_Controller extends ContentController {
 
